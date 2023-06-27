@@ -165,3 +165,11 @@ def seed(request):
 def appetizers_index(request):
     appetizers = Appetizer.objects.all()
     return render(request, 'appetizers.html', {'appetizers': appetizers})
+
+def mains_index(request):
+    mains = MainCourse.objects.all()
+    return render(request, 'mains.html', {'mains': mains})
+
+def desserts_index(request):
+    desserts = Dessert.objects.all()
+    return render(request, 'desserts.html', {'desserts': desserts})

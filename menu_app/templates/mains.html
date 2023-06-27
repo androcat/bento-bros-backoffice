@@ -8,10 +8,10 @@
   </head>
   <body>
     <main>
-      <h1>Appetizers</h1>
+      <h1>Main Courses</h1>
       <ul>
-        {% for app in appetizers %}
-        <li>{{ app.name }} {{app.price}} <button>Delete</button></li>
+        {% for item in mains %}
+        <li>{{ item.name }} {{item.price}} <button>Delete</button></li>
         {% endfor %}
       </ul>
     </main>
