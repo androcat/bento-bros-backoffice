@@ -24,6 +24,8 @@ urlpatterns = [
     path('home/', views.home_view, name='home'),
     path('menu/', views.seed, name='menu'),
     path('menu/<int:index>', views.menu_item_view, name='item'),
-    path('backoffice/appetizers', views.appetizers_index)
+    path('backoffice/appetizers', views.appetizers_index),
+    path('backoffice/mains', views.mains_index),
+    path('backoffice/desserts', views.desserts_index),
     # path('seed/', views.seed)
 ]
