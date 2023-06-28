@@ -1,7 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from menu_app.models import Appetizer, MainCourse, Dessert
 
 from django.http import HttpResponse
+
+appetizers = []
+mains = []
+desserts = []
 
 menu_list = [
       {
@@ -119,26 +123,16 @@ menu_list = [
     ]
 # Create your views here.
 def home_view(request):
-    return render(request, 'homepage.html') #{'data': data})
-
-def menu_view(request):
-    return render(request, 'menu.html', {'data': menu_list})
-
-def menu_item_view(request, index):
-    menu_item = menu_list[index]
-    return render(request, 'menu_item.html', {'data_item': menu_item})
+    return render(request, 'homepage.html')
 
 def seed(request):
-    # books = [
-    #   Book(title=”Book 1 of 3”, author=6),
-    #   Book(title=”Book 2 of 3”, author=3),
-    #   Book(title=”Book 3 of 3”, author=2)
-    # ]
-    appetizers = []
-    mains = []
-    desserts = []
+    # appetizers = []
+    # mains = []
+    # desserts = []
 
     Appetizer.objects.all().delete()
+    MainCourse.objects.all().delete()
+    Dessert.objects.all().delete()
 
     for food_obj in menu_list:
       if food_obj["type"] == 'appetizer':
@@ -147,20 +141,28 @@ def seed(request):
         mains.append(MainCourse(name=food_obj["name"], japanese_name=food_obj["japanese_name"], price=food_obj["price"], description=food_obj["description"]))
       elif food_obj["type"] == 'dessert':
         desserts.append(Dessert(name=food_obj["name"], japanese_name=food_obj["japanese_name"], price=food_obj["price"], description=food_obj["description"]))
-    
 
-
-
-    print(appetizers)
     Appetizer.objects.bulk_create(appetizers)
     MainCourse.objects.bulk_create(mains)
     Dessert.objects.bulk_create(desserts)
 
-    appetizers2 = Appetizer.objects.all()
-    print(appetizers)
-
     # return render(request, '')
-    return render(request, 'menu.html', {'appetizers': appetizers2, 'mains': mains, 'desserts': desserts}) #HttpResponse('<h1>Check terminal :^)</h1>')
+    return render(request, 'menu.html', {'appetizers': appetizers, 'mains': mains, 'desserts': desserts}) #HttpResponse('<h1>Check terminal :^)</h1>')
+
+def menu_view(request):
+    return render(request, 'menu.html', {'appetizers': appetizers, 'mains': mains, 'desserts': desserts})
+
+def appetizer_item_view(request, id):
+    obj = get_object_or_404(Appetizer, id=id)
+    return render(request, 'menu_item.html', {'obj': obj})
+
+def main_item_view(request, id):
+    obj = get_object_or_404(MainCourse, id=id)
+    return render(request, 'menu_item.html', {'obj': obj})
+
+def dessert_item_view(request, id):
+    obj = get_object_or_404(Dessert, id=id)
+    return render(request, 'menu_item.html', {'obj': obj})
 
 def appetizers_index(request):
     appetizers = Appetizer.objects.all()
@@ -173,3 +175,20 @@ def mains_index(request):
 def desserts_index(request):
     desserts = Dessert.objects.all()
     return render(request, 'desserts.html', {'desserts': desserts})
+
+def appetizers_delete(request, id):
+    # dictionary for initial data with
+    # field names as keys
+    
+ 
+    # fetch the object related to passed id
+    obj = get_object_or_404(Appetizer, id = id)
+ 
+    if request.method =="POST":
+        # delete object
+        obj.delete()
+        # after deleting redirect to
+        # home page
+        return HttpResponseRedirect("/")
+ 
+    return render(request, "appetizers.html", {'appetizer': obj})
