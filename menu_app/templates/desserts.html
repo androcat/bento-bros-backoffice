@@ -10,10 +10,13 @@
     <main>
       <h1>Desserts</h1>
       <ul>
-        {% for item in desserts %}
+        {% for obj in desserts %}
         <li>
-          {{ item.name }} {{item.price}}
-          <button><a href="backoffice/<appetizer.id>/delete">Delete</a></button>
+          {{ obj.name }} {{obj.price}}
+          <form action="{% url 'desserts-delete' obj.id %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Delete" />
+          </form>
         </li>
         {% endfor %}
       </ul>

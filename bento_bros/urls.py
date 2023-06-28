@@ -40,6 +40,8 @@ urlpatterns = [
     path('backoffice/appetizers/', views.appetizers_index, name="appetizers"),
     path('backoffice/mains', views.mains_index),
     path('backoffice/desserts', views.desserts_index),
-    path('backoffice/appetizers_delete/<int:id>', views.appetizers_delete, name="appetizers-delete")
-    # path('seed/', views.seed)
+    path('backoffice/appetizers_delete/<int:id>', views.appetizers_delete, name="appetizers-delete"),
+    path('backoffice/mains_delete/<int:id>', views.mains_delete, name="mains-delete"),
+    path('backoffice/desserts_delete/<int:id>', views.desserts_delete, name="desserts-delete"),
+    # path('seed/', views.seed) asdfg
 ]

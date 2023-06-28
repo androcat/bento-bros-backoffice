@@ -15,7 +15,7 @@
           {{ obj.name }} {{obj.price}}
           <form action="{% url 'appetizers-delete' obj.id %}" method="POST">
             {% csrf_token %}
-            <input type="submit" value="Delete" />
+            <button type="submit" value="Delete">Delete</button>
           </form>
         </li>
         {% endfor %}

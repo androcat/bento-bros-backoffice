@@ -10,8 +10,14 @@
     <main>
       <h1>Main Courses</h1>
       <ul>
-        {% for item in mains %}
-        <li>{{ item.name }} {{item.price}} <button>Delete</button></li>
+        {% for obj in mains %}
+        <li>
+          {{ obj.name }} {{obj.price}}
+          <form action="{% url 'mains-delete' obj.id %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Delete" />
+          </form>
+        </li>
         {% endfor %}
       </ul>
     </main>

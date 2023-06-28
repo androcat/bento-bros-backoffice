@@ -3,9 +3,9 @@ from menu_app.models import Appetizer, MainCourse, Dessert
 
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
 
-appetizers = []
-mains = []
-desserts = []
+# appetizers = []
+# mains = []
+# desserts = []
 
 menu_list = [
       {
@@ -126,21 +126,36 @@ def home_view(request):
     return render(request, 'homepage.html')
 
 def seed(request):
-    # appetizers = []
-    # mains = []
-    # desserts = []
+    
 
     Appetizer.objects.all().delete()
     MainCourse.objects.all().delete()
     Dessert.objects.all().delete()
 
+    appetizers = []
+    mains = []
+    desserts = []
+
+    # Is empty to start
+    print(Appetizer.objects.all())
+    print(MainCourse.objects.all())
+    print(Dessert.objects.all())
+
+    print("appetizers list pre filling in:", appetizers)
+
     for food_obj in menu_list:
-      if food_obj["type"] == 'appetizer':
+      food_name = food_obj["name"]
+      # print(Appetizer.objects.filter(name=food_name))
+      # print(not Appetizer.objects.filter(name=food_name).exists())
+      if food_obj["type"] == 'appetizer' and not Appetizer.objects.filter(name=food_name).exists():
         appetizers.append(Appetizer(name=food_obj["name"], japanese_name=food_obj["japanese_name"], price=food_obj["price"], description=food_obj["description"]))
-      elif food_obj["type"] == 'main course':
+      elif food_obj["type"] == 'main course' and not MainCourse.objects.filter(name=food_obj["name"]).exists():
         mains.append(MainCourse(name=food_obj["name"], japanese_name=food_obj["japanese_name"], price=food_obj["price"], description=food_obj["description"]))
-      elif food_obj["type"] == 'dessert':
+      elif food_obj["type"] == 'dessert' and not Dessert.objects.filter(name=food_obj["name"]).exists():
         desserts.append(Dessert(name=food_obj["name"], japanese_name=food_obj["japanese_name"], price=food_obj["price"], description=food_obj["description"]))
+
+
+    print("appetizers model list:", appetizers)
 
     Appetizer.objects.bulk_create(appetizers)
     MainCourse.objects.bulk_create(mains)
@@ -150,6 +165,9 @@ def seed(request):
     return render(request, 'menu.html', {'appetizers': appetizers, 'mains': mains, 'desserts': desserts}) #HttpResponse('<h1>Check terminal :^)</h1>')
 
 def menu_view(request):
+    appetizers = Appetizer.objects.all()
+    mains = MainCourse.objects.all()
+    desserts = Dessert.objects.all()
     return render(request, 'menu.html', {'appetizers': appetizers, 'mains': mains, 'desserts': desserts})
 
 def appetizer_item_view(request, id):
@@ -180,7 +198,7 @@ def appetizers_delete(request, id):
     # dictionary for initial data with
     # field names as keys
     
- 
+    appetizers = Appetizer.objects.all()
     # fetch the object related to passed id
     obj = get_object_or_404(Appetizer, id = id)
  
@@ -197,7 +215,7 @@ def mains_delete(request, id):
     # dictionary for initial data with
     # field names as keys
     
- 
+    mains = MainCourse.objects.all()
     # fetch the object related to passed id
     obj = get_object_or_404(MainCourse, id = id)
  
@@ -210,6 +228,22 @@ def mains_delete(request, id):
     else:
         return HttpResponseNotAllowed(['POST'])
 
+def desserts_delete(request, id):
+    # dictionary for initial data with
+    # field names as keys
+    
+    desserts = Dessert.objects.all()
+    # fetch the object related to passed id
+    obj = get_object_or_404(Dessert, id = id)
+ 
+    if request.method =="POST":
+        # delete object
+        obj.delete()
+        # after deleting redirect to
+        # home page
+        return render(request, 'desserts.html', {'desserts': mains})
+    else:
+        return HttpResponseNotAllowed(['POST'])
 # def appetizer_update(request, product_id):
 #     product = get_object_or_404(Product, id=product_id)
     
