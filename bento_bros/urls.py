@@ -27,6 +27,7 @@ from menu_app import views
 #     path('dessert_item/<int:id>', views.dessert_item_view, name="dessert-item"),
 # ]
 
+# app_name = "menu_app"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,9 +37,9 @@ urlpatterns = [
     path('appetizer_item/<int:id>', views.appetizer_item_view, name="appetizer-item"),
     path('main_item/<int:id>', views.main_item_view, name="main-item"),
     path('dessert_item/<int:id>', views.dessert_item_view, name="dessert-item"),
-    path('backoffice/appetizers', views.appetizers_index),
+    path('backoffice/appetizers/', views.appetizers_index, name="appetizers"),
     path('backoffice/mains', views.mains_index),
     path('backoffice/desserts', views.desserts_index),
-    path('backoffice/<id>/delete', views.appetizers_delete)
+    path('backoffice/appetizers_delete/<int:id>', views.appetizers_delete, name="appetizers-delete")
     # path('seed/', views.seed)
 ]

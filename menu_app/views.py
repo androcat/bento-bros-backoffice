@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from menu_app.models import Appetizer, MainCourse, Dessert
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
 
 appetizers = []
 mains = []
@@ -189,6 +189,36 @@ def appetizers_delete(request, id):
         obj.delete()
         # after deleting redirect to
         # home page
-        return HttpResponseRedirect("/")
+        return render(request, 'appetizers.html', {'appetizers': appetizers})
+    else:
+        return HttpResponseNotAllowed(['POST'])
+
+def mains_delete(request, id):
+    # dictionary for initial data with
+    # field names as keys
+    
  
-    return render(request, "appetizers.html", {'appetizer': obj})
+    # fetch the object related to passed id
+    obj = get_object_or_404(MainCourse, id = id)
+ 
+    if request.method =="POST":
+        # delete object
+        obj.delete()
+        # after deleting redirect to
+        # home page
+        return render(request, 'mains.html', {'mains': mains})
+    else:
+        return HttpResponseNotAllowed(['POST'])
+
+# def appetizer_update(request, product_id):
+#     product = get_object_or_404(Product, id=product_id)
+    
+#     if request.method == 'POST':
+#         form = ProductForm(request.POST, instance=product)
+#         if form.is_valid():
+#             form.save()
+#             # Handle success scenario
+#     else:
+#         form = ProductForm(instance=product)
+    
+#     return render(request, 'product_form.html', {'form': form})
