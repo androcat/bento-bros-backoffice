@@ -265,3 +265,23 @@ def appetizer_update(request, id):
       # 'appetizers': Appetizer.objects.all()
     }
     return render(request, 'appetizer_form.html', context)
+
+class MainCourseForm(forms.ModelForm):
+    class Meta:
+        model = MainCourse
+        fields = ['name', 'japanese_name', 'price', 'description']
+
+def main_update(request, id):
+    obj = get_object_or_404(MainCourse, id=id)
+    
+    if request.method == 'POST':
+        form = MainCourseForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+    else:
+        form = MainCourseForm(instance=obj)
+    context = {
+      'form': form,
+      'obj': obj
+    }
+    return render(request, 'main_form.html', context)
