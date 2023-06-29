@@ -285,3 +285,23 @@ def main_update(request, id):
       'obj': obj
     }
     return render(request, 'main_form.html', context)
+
+class DessertForm(forms.ModelForm):
+    class Meta:
+        model = Dessert
+        fields = ['name', 'japanese_name', 'price', 'description']
+
+def dessert_update(request, id):
+    obj = get_object_or_404(Dessert, id=id)
+    
+    if request.method == 'POST':
+        form = DessertForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+    else:
+        form = DessertForm(instance=obj)
+    context = {
+      'form': form,
+      'obj': obj
+    }
+    return render(request, 'dessert_form.html', context)
