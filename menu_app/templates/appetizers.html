@@ -17,6 +17,10 @@
             {% csrf_token %}
             <button type="submit" value="Delete">Delete</button>
           </form>
+          <form action="{% url 'appetizer-form' obj.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" value="Edit">Edit</button>
+          </form>
         </li>
         {% endfor %}
       </ul>

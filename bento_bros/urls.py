@@ -43,5 +43,6 @@ urlpatterns = [
     path('backoffice/appetizers_delete/<int:id>', views.appetizers_delete, name="appetizers-delete"),
     path('backoffice/mains_delete/<int:id>', views.mains_delete, name="mains-delete"),
     path('backoffice/desserts_delete/<int:id>', views.desserts_delete, name="desserts-delete"),
+    path('backoffice/appetizer_form/<int:id>', views.appetizer_update, name="appetizer-form")
     # path('seed/', views.seed) asdfg
 ]
