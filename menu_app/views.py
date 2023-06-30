@@ -305,3 +305,33 @@ def dessert_update(request, id):
       'obj': obj
     }
     return render(request, 'dessert_form.html', context)
+
+def appetizer_create(request):    
+    if request.method == 'POST':
+        form = AppetizerForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = AppetizerForm()
+
+    return render(request, 'appetizer_create.html', {'form': form})
+
+def main_create(request):    
+    if request.method == 'POST':
+        form = MainCourseForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = MainCourseForm()
+
+    return render(request, 'main_create.html', {'form': form})
+
+def dessert_create(request):    
+    if request.method == 'POST':
+        form = DessertForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = DessertForm()
+
+    return render(request, 'dessert_create.html', {'form': form})

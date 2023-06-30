@@ -46,6 +46,9 @@ urlpatterns = [
     path('backoffice/appetizer_edit_form/<int:id>', views.appetizer_update, name="appetizer-edit-form"),
     path('backoffice/main_course_edit_form/<int:id>', views.main_update, name="main-edit-form"),
     path('backoffice/desert_edit_form/<int:id>', views.dessert_update, name="dessert-edit-form"),
+    path('backoffice/appetizer_create_form', views.appetizer_create, name="appetizer-create-form"),
+    path('backoffice/main_create_form', views.main_create, name="main-create-form"),
+    path('backoffice/dessert_create_form', views.dessert_create, name="dessert-create-form"),
 
     # path('seed/', views.seed) asdfg
 ]
